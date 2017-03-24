@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<!--
+	Spatial by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>How To Guide</title>
+		<link rel="shortcut icon" href="images/temperature.png">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="landing">
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<h1><strong><a href="index.html">How To Guide</a></strong> on The World Bank Climate Data API</h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="#about">About</a></li>
+						<li><a href="#start">Start</a></li>
+						<li><a href="#create">Create</a></li>
+						<li><a href="#end">End</a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+
+		<!-- Banner -->
+			<section id="banner">
+				<h2><a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/902061-climate-data-api">Climate Data API</a></h2><br>
+				<p>------------------------------
+					<br>This guide will teach you how to gather data
+					<br>from the The World Bank via their API
+					<br>to create charts that visually show
+					<br>the consequences of climate change.
+				<br>------------------------------</p>
+			</section>
+
+			<!-- One -->
+				<section id="about" class="wrapper style1">
+					<div class="container 75%">
+						<div class="row 200%">
+							<div class="6u 12u$(medium)">
+								<header class="major">
+									<h2>About the Climate Data API</h2><br>
+									<p>Before we begin to look at the components of this API and start coding, let's take a look at its intended purpose.</p><br><br>
+									<div class="image fit captioned">
+									<img src="images/tempmap.png" alt="" />
+									<h4>Temperature data displayed on a map, taken from the Climate Change Knowledge Portal.</h4>
+								</div>
+								</header>
+							</div>
+							<div class="6u$ 12u$(medium)">
+								<p>The World Bank is an international organization that gives loans to developing countries. Their official goal is to eradicate poverty.</p>
+								<p>In 2012, The World Bank president Jim Yong Kim said "Climate change is one of the single biggest challenges facing development, and we need to assume the moral responsibility to take action on behalf of future generations, especially the poorest." They doubled their aid to climate change adaptation to $4.6 billion.</p>
+								<p>In 2015, The World Bank was one of the twenty-two organizations that committed to help achieved the Millennium Development Goals. These are eight goals, the 7th of which is to ensure environment sustainability.</p>
+								<p>The World Bank is very committed to helping slow climate change and global warming. Their <a href="http://sdwebx.worldbank.org/climateportal/">Climate Change Knowledge Portal</a> was created as part of their initiative to help educate the population on climate change and reverse poor habits.</p>
+								<p><a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/902061-climate-data-api">The API we are about to learn about</a> provides access to the data that powers the knowledge portal. There are so many ways the data can be used. We are going to learn how to create simple graphs to chart future climate change.</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Two -->
+				<section id="start" class="wrapper style2">
+					<div class="container">
+						<section class="special">
+						<header class="major">
+							<h2>Let's Start!</h2>
+							<p>Understanding the API</p>
+						</header>
+						</section>
+						<div>
+							<p>First, we must go over a few basics. The Climate Data API uses REST-based responses, which will work well for us when we move on to creating graphs. We need to understand the structure of the call we need to make before we can think of what data we want.</p>
+							<p>We make a call to the API using HTTP GET. The general form for this request looks like this:</p>
+							<p><code>http://climatedataapi.worldbank.org/climateweb/rest/v1/<i><b>country/type/var/start/end/ISO3</b>[.ext]</i></code></p>
+							<p>Anything in italics is a variable. Anything in bold is necessary. That is to say, bold variables must be present, but they are a variable that can be changed. The only non-essential variable is the extension.</p>
+							<p>Let's dive in to what each of these variables mean and how to build a request for data that we want.</p>
+						</div><br>
+						<section class="special">
+						<header class="major">
+							<p>Understanding the GET Request</p>
+						</header>
+						</section>
+						<div>
+							<p>While all pieces of the GET request are explained in the documentation <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/902061-climate-data-api">here</a>, it can be a bit confusing as to what each variable is changing in the data recieved. However, it is a great resource to see how each variable is restricted. Here, I will try to make the information more accessible for the less-technical user.</p>
+							<ol>
+								<li>All GET requests to the API start with the URL:<br>
+									<code>http://climatedataapi.worldbank.org/climateweb/rest/</code><br>
+									This is the endpoint, meaning that this is the resource and after this is where data specifications can be set.</li><br>
+								<li>The <code>country</code> variable can be changed to represent either data on a country or on a basin. Just add the word country or basin to the next part of the URL.</li><br>
+								<li>The <code>type</code> variable indicates what type of average you want to receive. You have a choice from monthly average, annual average, average monthly change, or average annual change. Note that these last two options only work for future year ranges. The keyword to use is shown on the graphic below.<br><br>
+									<center><img src="images/type.png" alt="" style="width:50%; height:50%;" /></center></li><br>
+								<li>The <code>var</code> variable indicates what type of data you want to receive. You have a choice from precipitation or surface temperature.<br><br>
+									<center><img src="images/var.png" alt="" style="width:35%; height:35%;" /></center></li><br>
+								<li>The <code>start</code> and <code>end</code> variables are the years that you would like the data to begin and end at. The start and end years are matched up, with pairs specified below. If you are trying to get yearly averages, you will get one average for the range of years. If you are trying to get monthly averages, you will get one average for each month during that range of years. Now, there will be more than one result, but more on that later.<br>
+								<center><img src="images/past.png" alt="" style="width:17%; height:17%;" /><img src="images/future.png" alt="" style="width:17%; height:17%;" /></center></li><br>
+								<li>The <code>ISO3</code> variable is used to select the specific country or basin you’d like data on. A country code is three letters that represent the country. Find the country code to add from <a href="https://unstats.un.org/unsd/methods/m49/m49alpha.htm">here</a>. To see data on a basin, simply enter a number between 1 and 468 which corresponds to a regional river basin. Find the basin IDs <a href="http://data.worldbank.org/sites/default/files/climate_data_api_basins.pdf">here</a>.</li><br>
+								<li>The <code>[.ext]</code> variable indicates what type of response you would like. You can specify a CSV, XML, or JSON response. This is an optional variable, and if not included, the response will be JSON. We will be using JSON for our coding purposes later.</li><br>
+							</ol>
+						</div><br>
+						<section class="special">
+						<header class="major">
+							<p>Filtering the Response</p>
+						</header>
+						</section>
+						<div>
+							<p>If you have already tried out one of these GET requests, you may have noticed you receive a very long response. This was mentioned earlier, and is because there are multiple sources that The World Bank gets its data from. There is a way to filter some of these responses out. With this in mind, let's add some more variables to our GET request!<br><br>
+								<code>http://climatedataapi.worldbank.org/climateweb/rest/v1/country/type/<i>GCM</i>/<i>SRES</i>/var/start/end/ISO3[.ext]</code></p>
+							<ol>
+								<li>The <code>GCM</code> variable is an acronym that stands for different Global Circulation Models. A GCM is a climate model that uses a mathematical model of the circulation of the atmosphere and ocean to derive data. There are fifteen different GCMs that the API uses. The keyword to filter by a certain model is shown in the graphic below.<br><br>
+								<center><img src="images/GCM1.png" alt="" style="width:20%; height:20%;" /><img src="images/GCM2.png" alt="" style="width:20%; height:20%;" /><img src="images/GCM3.png" alt="" style="width:20%; height:20%;" /></center></li><br>
+								<li>The <code>SRES</code> variable is one of two SRES (or Special Report on Emissions Scenarios). There is a2 or b1. The a2 scenario is a more divided world. This scenario is characterized by independently operating nations with increasing populations and regionally oriented economic development. The b2 scenario is a more integrated world. This scenario is characterized by economic growth in the information economy, a population that declines after hitting 9 billion, clean and efficient resources, and an emphasis on global solutions. Because this is based on models of future scenarios, this variable will only work on future year ranges.</li><br>
+							</ol>
+						</div><br>
+						<section class="special">
+						<header class="major">
+							<p>Ensemble Responses</p>
+						</header>
+						</section>
+						<div>
+							<p>You may be wondering how to not just filter out the data by source and models, but get an average of that as well as the data. This is what ensembles are used for. This new form takes the data from all of the different GCMs and averages it for you. It responds with the 10th percentile, the 50th percentile (or median), and 90th percentile values from all GCMs. If you are requesting ensemble responses, you must include the keyword <code>ensemble</code> as written in the form below. You can also add some variable filters to this form. So let's take a look at them!<br><br>
+								<code>http://climatedataapi.worldbank.org/climateweb/rest/v1/country/type/<i><b>ensemble</b></i>/<i>SRES</i>/<i>percent</i>/<i>[var/stat]</i>/start/end/ISO3[.ext]</code></p>
+							<ol>
+								<li>Here we see the <code>SRES</code> variable again. There is no need to re-explain, as this again filters by the two scenarios, a2 and b1. It still must only be used for future years.</li><br>
+								<li>The <code>percent</code> variable lets you filter by percentile. When using the ensemble response, the GCM values are returned by percentile, so you may use the numbers 10, 50, or 90 to filter by whichever percentile.</li><br>
+								<li>The <code>var/stat</code> variable lets you play with what data you'd like to receive a bit more. You can use any of the var variables before, or replace it with one of the stats in the graphic below. Note that you may only use the stat options for future years, and you may only choose one of two year ranges, (2046-2065) or (2081-2100).<br><br>
+									<center><img src="images/stat1.png" alt="" style="width:50%; height:50%;" /><br><img src="images/stat2.png" alt="" style="width:50%; height:50%;" /><br><img src="images/stat3.png" alt="" style="width:50%; height:50%;" /></center></li><br>
+							</ol>
+						</div><br>
+						<section class="special">
+						<header class="major">
+							<p>Historical Data</p>
+						</header>
+						</section>
+						<div>
+							<p>For our last form of request, we can look at historical data on precipitation and temperature. This form doesn't take any data from GCMs, and instead derives them from Climate Research Unit. You may request to see data by month, year, or decade by choosing one of the keywords in the form below.<br><br>
+								<code>http://climatedataapi.worldbank.org/climateweb/rest/v1/country/cru/var/<i>[month/year/decade]</i>/ISO3[.ext]</code></p>
+						</div><br>
+						<section class="special">
+						<header class="major">
+							<p>Let's Try One!</p>
+						</header>
+						</section>
+						<div>
+							<p>Now that you have all of that information swimming around in your head, let's put it to use! We are going to make a request!<br><br>
+								<code>http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/ensemble/50/tmax_days90th/2081/2100/USA.JSON</code></p>
+							<ul>
+								<li>We are choosing to go by country.</li>
+								<li>We are looking at monthly averages.</li>
+								<li>We are going to ensemble the data by GCM.</li>
+								<li>We are looking at the median values.</li>
+								<li>We are looking at the number of days with a maximum temperature above the control period’s 90th percentile.</li>
+								<li>We are looking at a future range of 2081-2100.</li>
+								<li>We are looking at the USA.</li>
+								<li>We are returning JSON (this is the default, but let's go ahead and specify).</li>
+							</ul>
+							<p>Fantastic! Our first GET request! Let's take a look at the result:<br><br>
+								<section class="weird">
+								<samp>[{"scenario":"a2","monthVals":[0.3647132228471589,0.22892768224884222,0.2766832901335918,0.8900249357754173,6.600623436950065,19.54077307066137,28.285411511276305,26.891396484469055,16.10274313170996,4.80660847855954,1.1457606039554162,0.6299251821219044],"percentile":50,"fromYear":2081,"toYear":2100},{"scenario":"b1","monthVals":[0.05810473904829202,0.022069825347234416,0.02568578571453767,0.1862842911421698,3.0765585882450246,13.945885269718824,24.24413967608181,23.022693263028433,11.080299248049585,2.4452618392945924,0.6364089819392641,0.23254364052608828],"percentile":50,"fromYear":2081,"toYear":2100}]</samp></section>
+						</div>
+					</div>
+				</section>
+
+			<!-- Three -->
+				<section id="create" class="wrapper style1">
+					<div class="container">
+						<section class="special">
+						<header class="major">
+							<h2>Creating with Code</h2>
+							<p>Simplify with JavaScript</p>
+						</header>
+						</section>
+						<div>
+							<p>Now that we understand how to make a call to the API, let's break the response down into usable pieces.</p>
+							<p>Because The World Bank's APIs don't support Cross-Origin Domain Requests (CORS), we are going to use jQuery to access the above data as a JSONP (JSON with Padding). jQuery is a JavaScript library, so we will be adding this to our JavaScript file with the script source in our HTML file. This is how we will access the API.</p>
+							<p>Let's use the same call as in the previous section:</p>
+							<iframe width="100%" height="300" src="//jsfiddle.net/helmsk/tt2kx9zw/9/embedded/js,html/" allowfullscreen="allowfullscreen" frameborder="0"></iframe><br>
+							<p>Let's take a look at what's going on:</p>
+							<ul>
+								<li>AJAX is Asynchronous JavaScript and XML. Ajax is a technique used to send HTTP request. <code>$.ajax()</code> enables you to apply the Ajax technique and send request. There are many other ways you can apply the Ajax technique, but we will focus on jQuery in this guide.</li>
+								<li><code>url</code> is where we put our url API call, complete with variables.</li>
+								<li><code>dataType</code> tells jQuery that we are expecting to get back JSONP.</li>
+								<li><code>data: { format</code> tells jQuery what format we would like the data to be in. Because JavaScript works nicely with JSON, we will want JSON.</li>
+								<li>You'll also notice we have included a script source in our HTML as mentioned earlier.</li>
+							</ul>
+							<p>You may have noticed our API call has an extra bit encoded on the end: <code>?callback=handler</code>. This is our callback function. It tells jQuery what function to use for the data we just recieved. Let's make that function now.</p>
+							<iframe width="100%" height="300" src="//jsfiddle.net/helmsk/tt2kx9zw/10/embedded/js,html/" allowfullscreen="allowfullscreen" frameborder="0"></iframe><br>
+							<p>Let's see what was added:</p>
+							<ul>
+								<li>Our <code>handler</code> function is the function that recieves all of the information. It was passed the json file.</li>
+								<li>We also added a bunch of <code>document.getElementById('text').textContent</code>. This allows us to grab information from the JSON. If you take a look at the JSON we recieved in the previous section, you will notice it is an array of two objects: each object with a scenario, a monthVals array, a percentile, a fromYear and a toYear. We are setting the values in the <code>monthVals</code> array to their corresponding months. We have two different sets for the two different scenarios presented.</li>
+								<li>If you look at the HTML file, we added a table where you can see the values we have recieved. It is set up in a way so you know what value goes with what month and scenario.</li>
+							</ul>
+							<p>If everything has gone correctly, you should have something resembling this:</p>
+							<center><img src="images/table.png" alt="" style="width:50%; height:50%;" /></center><br>
+							<p>Fantastic! You have successfully grabbed the data.</p>
+							<p>This table shows that if we have a more divided world (scenario a2), we can expect at least 1/5 of a day to have a maximum temperature above the control period’s 90th percentile in February and over 28 days to have a maximum temperature above the control period’s 90th percentile in July. Conversely in a more unified world (scenarion b1), we have about 1/50th of a day with a maximum temperature above the control period’s 90th percentile in February and just over 24 days with a maximum temperature above the control period’s 90th percentile in July.</p>
+							<p>Now let's make a chart!</p>
+							<iframe width="100%" height="300" src="//jsfiddle.net/helmsk/tt2kx9zw/11/embedded/js,html/" allowfullscreen="allowfullscreen" frameborder="0"></iframe><br>
+							<p>We are using the line chart templates provided by <a href="http://canvasjs.com/docs/charts/chart-types/html5-line-chart/">CanvasJS</a>. Let's see how they work:</p>
+							<ul>
+								<li>We have now added a bunch of sections that look like this: <code>var janFloat1 = parseFloat(json[0].monthVals[0]);</code>. This reformats the number we recieve as a string into a floating integer so as to use it in our line chart. We do this for each month of each scenario.</li>
+								<li>We use the code provided by CanvasJS to create a linechart and use our floating ints as the y value on the chart. Note that we have two lines, one for scenario a2 and one for scenario b1.</li>
+								<li>We add the chart container in the HTML file to display the chart.</li>
+								<li>We added the script source provided by CanvasJS to take advantage of the resources, as shown in the HTML file.</li>
+							</ul>
+							<p>Hopefully, you are seeing a very beautiful line chart with disastrous consequences for future generations that looks like this:</p>
+							<center><img src="images/chart.png" alt="" style="width:50%; height:50%;" /></center><br>
+						</div>
+						</div>
+						</section>
+
+			<!-- Four -->
+				<section id="end" class="wrapper style2">
+					<div class="container">
+						<section class="special">
+						<header class="major">
+							<h2>End Results</h2>
+							<p>Some more chart examples</p>
+						</header>
+						</section>
+						<div>
+							<p>Now that you know how to make your own charts, here are some more examples of what you can make with the data in order to inspire you!</p>
+						</div>
+							<div class="feature-grid">
+							<div class="feature">
+								<div class="image"><img src="images/chart2.png" /></div>
+								<div class="content">
+									<header>
+										<h5>Yearly Temperature</h5>
+										<p>2060-2079</p>
+									</header>
+									<p>This chart shows the average temperature over the time period for SRES scenarios.</p>
+								</div>
+							</div>
+							<div class="feature">
+								<div class="image"><img src="images/chart3.png" /></div>
+								<div class="content">
+									<header>
+										<h5>Temperature Change</h5>
+										<p>2020-2039</p>
+									</header>
+									<p>This chart shows the yearly temperature change from 1961-1999 to 2020-2039.</p>
+								</div>
+							</div>
+							<div class="feature">
+								<div class="image"><img src="images/chart4.png" /></div>
+								<div class="content">
+									<header>
+										<h5>Precipitation Change</h5>
+										<p>2020-2039</p>
+									</header>
+									<p>This chart shows the monthly precipitation change in 2020-2039.</p>
+								</div>
+							</div>
+							<div class="feature">
+								<div class="image"><img src="images/chart5.png" /></div>
+								<div class="content">
+									<header>
+										<h5>Monthly Dry Spell Streak</h5>
+										<p>2081-2100</p>
+									</header>
+									<p>This chart shows the average monthly dry spell over the time period.</p>
+								</div>
+							</div>									
+							<div class="feature">
+								<div class="image"><img src="images/chart6.png" /></div>
+								<div class="content">
+									<header>
+										<h5>Historical Temperature</h5>
+										<p>1900-2010</p>
+									</header>
+									<p>This chart shows the average temperature for each decade.</p>
+								</div>
+							</div>							
+							<div class="feature">
+								<div class="image"><img src="images/chart7.png" /></div>
+								<div class="content">
+									<header>
+										<h5>Historical Precipitation</h5>
+										<p>1900-2010</p>
+									</header>
+									<p>This chart shows the average precipitation for each decade.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="copyright">
+						<li>&copy; How To Guide</li>
+						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
